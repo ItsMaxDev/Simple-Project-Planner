@@ -12,7 +12,7 @@ This is a simple project planner application I built with Vue 3 and Vite. It all
 - **Delete a project**: Remove projects that are no longer needed.
 - **Mark a project as completed**: Keep track of your progress.
 <br>
-<br>  
+
 ## 🛠️ Project Setup
 
 ⚠️ Before you start, make sure you have [Node.js](https://nodejs.org/) installed on your machine. Node.js is required to run `npm` commands. 
@@ -70,7 +70,7 @@ The application is structured as follows:
 - `src/composables/`: Contains Vue composable functions for interacting with the backend server.
 - `data/db.json`: The mock database file for json-server.
 <br>
-<br>
+
 ## 💻 Recommended IDE Setup
 
 For the best development experience, I recommend using [VSCode](https://code.visualstudio.com/) with the [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar) extension (and disable Vetur).
