@@ -21,13 +21,16 @@ const selectedFilter = ref('all');
 const filteredProjects = computed(() => {
   switch (selectedFilter.value) {
     case 'all':
-      return projects.value;
+      return projects.value
+        .filter(project => project.status === 'notStarted')
+        .concat(projects.value.filter(project => project.status === 'inProgress'))
+        .concat(projects.value.filter(project => project.status === 'finished'));
+    case 'notStarted':
+      return projects.value.filter(p => p.status === 'notStarted');
     case 'inProgress':
-      return projects.value.filter(p => !p.completed);
+      return projects.value.filter(p => p.status === 'inProgress');
     case 'finished':
-      return projects.value.filter(p => p.completed);
-    default:
-      return projects.value;
+      return projects.value.filter(p => p.status === 'finished');
   }
 });
 
@@ -35,8 +38,19 @@ onMounted(async () => {
     await load()
 })
 
-async function completeProject(project) {
-  project.completed = !project.completed
+async function updateStatus(project) {
+  switch (project.status) {
+    case 'notStarted':
+      project.status = "inProgress"
+      break
+    case 'inProgress':
+      project.status = "finished"
+      break
+    case 'finished':
+      project.status = "notStarted"
+      break
+  }
+
   await update(project)
 }
 
@@ -77,8 +91,14 @@ function closeRemoveProjectModal() {
       </div>
       <div class="form-control">
         <label class="label cursor-pointer flex-row-reverse ps-0">
+          <span class="label-text ms-1.5">Not Started</span> 
+          <input type="radio" name="radio-10" class="radio checked:bg-gray-500" v-model="selectedFilter" value="notStarted" />
+        </label>
+      </div>
+      <div class="form-control">
+        <label class="label cursor-pointer flex-row-reverse ps-0">
           <span class="label-text ms-1.5">In Progress</span> 
-          <input type="radio" name="radio-10" class="radio checked:bg-red-500" v-model="selectedFilter" value="inProgress"/>
+          <input type="radio" name="radio-10" class="radio checked:bg-orange-500" v-model="selectedFilter" value="inProgress"/>
         </label>
       </div>
       <div class="form-control">
@@ -96,7 +116,7 @@ function closeRemoveProjectModal() {
     </div>
     <div v-if="filteredProjects.length" class="w-1/2 overflow-y-auto space-y-2" style="max-height: 650px;">
       <div v-for="project in filteredProjects" :key="project.id">
-        <Project :project="project" @delete="removeProject" @edit="editProject" @complete="completeProject" class="mb-1.5 mt-1.5"/>
+        <Project :project="project" @delete="removeProject" @edit="editProject" @updateStatus="updateStatus" class="mb-1.5 mt-1.5"/>
       </div>
     </div>
     <div v-if="!filteredProjects.length && !error" class="w-1/2 mt-5">

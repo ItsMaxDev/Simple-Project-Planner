@@ -10,7 +10,7 @@ const name = ref('')
 const description = ref('')
 
 async function createProject() {
-    const project = { name: name.value, description: description.value, completed: false }
+    const project = { name: name.value, description: description.value, status: 'notStarted' }
     await add(project)
 
     if(!error.value) {

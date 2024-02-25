@@ -6,11 +6,11 @@ This is a simple project planner application I built with Vue 3 and Vite. It all
 ## 🚀 Features
 
 - **View a list of projects**: See all your projects in one place.
-- **Filter the list of projects**: Easily find the projects you're interested in.
+- **Change the status of a project**: Keep track of your progress.
+- **Filter the list of projects**: Easily find the projects based on their status.
 - **Add a new project**: Start new projects with ease.
 - **Edit an existing project**: Make changes to your projects as needed.
 - **Delete a project**: Remove projects that are no longer needed.
-- **Mark a project as completed**: Keep track of your progress.
 <br>
 
 ## 🛠️ Project Setup
